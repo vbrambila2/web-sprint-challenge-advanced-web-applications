@@ -5,6 +5,7 @@ const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props) {
   const [values, setValues] = useState(initialFormValues)
+  const [disabled, setDisabled] = useState(true)
   // ✨ where are my props? Destructure them here
   const { currentArticle, onSubmit } = props
 
@@ -19,6 +20,23 @@ export default function ArticleForm(props) {
   const onChange = evt => {
     const { id, value } = evt.target
     setValues({ ...values, [id]: value })
+
+    const question_text_input = document.getElementById("title");
+    const newQuestion = question_text_input.value
+    const true_answer_text_input = document.getElementById("text");
+    const newTrueAnswer = true_answer_text_input.value
+    const false_answer_text_input = document.getElementById("topic");
+    const newFalseAnswer = false_answer_text_input.value
+
+    if (newFalseAnswer.trim().length === 0) {
+      setDisabled(true) 
+    } else if (newTrueAnswer.trim().length === 0) {
+      setDisabled(true) 
+    } else if (newQuestion.trim().length === 0) {
+      setDisabled(true) 
+    } else {
+      setDisabled(false)
+    }
   }
 
   const submit = evt => {
@@ -33,6 +51,7 @@ export default function ArticleForm(props) {
   const isDisabled = () => {
     // ✨ implement
     // Make sure the inputs have some values
+   
   }
 
   return (
@@ -61,7 +80,7 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={isDisabled()} id="submitArticle">Submit</button>
+        <button disabled={disabled} id="submitArticle">Submit</button>
         <button onClick={Function.prototype}>Cancel edit</button>
       </div>
     </form>
