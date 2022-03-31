@@ -21,18 +21,18 @@ export default function ArticleForm(props) {
     const { id, value } = evt.target
     setValues({ ...values, [id]: value })
 
-    const question_text_input = document.getElementById("title");
-    const newQuestion = question_text_input.value
-    const true_answer_text_input = document.getElementById("text");
-    const newTrueAnswer = true_answer_text_input.value
-    const false_answer_text_input = document.getElementById("topic");
-    const newFalseAnswer = false_answer_text_input.value
+    const title_input = document.getElementById("title");
+    const newTitle = title_input.value
+    const text_input = document.getElementById("text");
+    const newText = text_input.value
+    const topic_input = document.getElementById("topic");
+    const newTopic = topic_input.value
 
-    if (newFalseAnswer.trim().length === 0) {
+    if (newTopic.trim().length === 0) {
       setDisabled(true) 
-    } else if (newTrueAnswer.trim().length === 0) {
+    } else if (newText.trim().length === 0) {
       setDisabled(true) 
-    } else if (newQuestion.trim().length === 0) {
+    } else if (newTitle.trim().length === 0) {
       setDisabled(true) 
     } else {
       setDisabled(false)
@@ -46,12 +46,6 @@ export default function ArticleForm(props) {
     // depending on the truthyness of the `currentArticle` prop.
     onSubmit(values)
     setValues(initialFormValues)
-  }
-
-  const isDisabled = () => {
-    // ✨ implement
-    // Make sure the inputs have some values
-   
   }
 
   return (
