@@ -101,17 +101,41 @@ export default function App() {
       })
   }
 
-  const putArticle = () => {
-
+  const putArticle = article => {
+    console.log('clock')
+    const { article_id, ...changes } = article
+    axiosWithAuth().put(`${articlesUrl}/${article_id}`, changes)
+      .then(res => {
+        setArticles(articles.map(art => {
+          return art.article_id === article_id ? res.data.article : art
+        }))
+        setMessage(res.data.message)
+        setCurrentArticleId(null)
+      })
+      .catch(err => {
+        setMessage(err?.response?.data?.message)
+      })
   }
 
-  const updateArticle = ({ article_id, article }) => {
+  const updateArticle = (article_id) => {
     // ✨ implement
     // You got this!
+    setCurrentArticleId(article_id)
+    console.log("click")
   }
 
   const deleteArticle = article_id => {
     // ✨ implement
+    axiosWithAuth().delete(`${articlesUrl}/${article_id}`)
+      .then(res => {
+        setMessage(res.data.message)
+        setArticles(articles.filter(art => {
+          return art.article_id !== article_id
+        }))
+      })
+      .catch(err => {
+        setMessage(err?.response?.data?.message)
+      })
   }
 
   const onSubmit = article => {
@@ -145,6 +169,8 @@ export default function App() {
               <Articles
                 articles={articles}
                 getArticles={getArticles}
+                updateArticle={updateArticle}
+                deleteArticle={deleteArticle}
               />
             </>
           } />
