@@ -87,6 +87,22 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
+    setMessage('')
+    setSpinnerOn(true)
+
+    axiosWithAuth().post(articlesUrl, article)
+      .then(res => {
+        setArticles([ ...articles, res.data.article ])
+        setMessage(res.data.message)
+        setSpinnerOn(false)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  const putArticle = () => {
+
   }
 
   const updateArticle = ({ article_id, article }) => {
@@ -96,6 +112,14 @@ export default function App() {
 
   const deleteArticle = article_id => {
     // ✨ implement
+  }
+
+  const onSubmit = article => {
+    if (currentArticleId) {
+      putArticle(article)
+    } else {
+      postArticle(article)
+    }
   }
 
   return (
@@ -114,7 +138,10 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
+              <ArticleForm
+                onSubmit={onSubmit}
+                currentArticle={articles.find(art => art.article_id === currentArticleId)}
+              />
               <Articles
                 articles={articles}
                 getArticles={getArticles}
