@@ -55,7 +55,8 @@ export default function ArticleForm(props) {
   }
   
   const cancelEdit = () => {
-    setValues(initialFormValues)
+    onSubmit(values)
+    //setValues(initialFormValues)
   }
 
   return (
@@ -84,8 +85,15 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={disabled} id="submitArticle">Submit</button>
-        <button onClick={cancelEdit}>Cancel edit</button>
+        {
+          currentArticle 
+          ?  <div>
+              <button disabled={disabled} id="submitArticle">Submit</button>
+              <button onClick={cancelEdit}>Cancel edit</button>
+             </div>
+          :  <button disabled={disabled} id="submitArticle">Submit</button>
+        }
+        
       </div>
     </form>
   )
